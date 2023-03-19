@@ -1,0 +1,1 @@
+a = convert_phasor(1,120); % operador rotacional
