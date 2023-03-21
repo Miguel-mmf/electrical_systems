@@ -1,6 +1,7 @@
 % clc;
 clear;
 addpath("./utils/")
+addpath("./utils/equilibradas/")
 a = convert_phasor(1,120);
 dlgtitle = 'Sistemas Trifásicos';
 
@@ -54,7 +55,9 @@ end
 %% Conversão da ligação das cargas em delta para estrela
 for i = 1:num_cargas
     if ligacao_Zcarga(i) == 'Δ'
-        Zcarga(i) = Zdelta_to_Zestrela(Zcarga(i));
+        if ligacao_gerador ~= 'Δ'
+            Zcarga(i) = Zdelta_to_Zestrela(Zcarga(i));
+        end
     end
 end
 
@@ -92,7 +95,7 @@ Z_carga = Zcarga;
 for i = 1:num_cargas
 
     if ligacao_Zcarga(i) == 'Δ'
-        Zcarga(i) = Zdelta_to_Zestrela(Zcarga(i));
+%         Zcarga(i) = Zdelta_to_Zestrela(Zcarga(i));
         fprintf('\n\nImpedância de carga - Ligação Triângulo (Δ): %.2f j%.2f Ω\n',real(Z_carga(i)),imag(Z_carga(i)));
         IAB = VAB/Zcarga(i);
         IBC = VBC/Zcarga(i);
@@ -100,6 +103,9 @@ for i = 1:num_cargas
         IAN = IAB - ICA;
         IBN = IBC - IAB;
         ICN = ICA - IBC;
+        Vcarga_A = IAB*Zcarga(i);
+        Vcarga_B = IBC*Zcarga(i);
+        Vcarga_C = ICA*Zcarga(i);
         fprintf('\nTensão de Fase e Linha (A) na carga %.2f j%.2f Ω: %.2f/%.2f V\n',real(Z_carga(i)),imag(Z_carga(i)),abs(Vcarga_A),angle(Vcarga_A)*180/pi);
         fprintf('Tensão de Fase e Linha (B) na carga %.2f j%.2f Ω: %.2f/%.2f V\n',real(Z_carga(i)),imag(Z_carga(i)),abs(Vcarga_B),angle(Vcarga_B)*180/pi);
         fprintf('Tensão de Fase e Linha (C) na carga %.2f j%.2f Ω: %.2f/%.2f V\n',real(Z_carga(i)),imag(Z_carga(i)),abs(Vcarga_C),angle(Vcarga_C)*180/pi);
