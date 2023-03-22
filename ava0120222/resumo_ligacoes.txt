@@ -1,0 +1,24 @@
+Resumo das ligações
+
+Ligacao Y
+    - Seq +
+        - VAB = sqrt(3)*VAN/convert_phasor(1,30);
+        - VBC = sqrt(3)*VBN/convert_phasor(1,30);
+        - VCA = sqrt(3)*VCN/convert_phasor(1,30);
+    - Seq -
+        - VAB = sqrt(3)*VAN/convert_phasor(1,-30);
+        - VBC = sqrt(3)*VBN/convert_phasor(1,-30);
+        - VCA = sqrt(3)*VCN/convert_phasor(1,-30);
+
+Ligacao Delta
+    - Seq +
+        - IA = sqrt(3)*IAB/convert_phasor(1,-30);
+        - IB = sqrt(3)*IBC/convert_phasor(1,-30);
+        - IC = sqrt(3)*ICA/convert_phasor(1,-30);
+        - IAN = IAB - ICA;
+        - IBN = IBC - IAB;
+        - ICN = ICA - IBC;
+    - Seq -
+        - IA = sqrt(3)*IAB/convert_phasor(1,30);
+        - IB = sqrt(3)*IBC/convert_phasor(1,30);
+        - IC = sqrt(3)*ICA/convert_phasor(1,30);
