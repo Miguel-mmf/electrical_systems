@@ -1,5 +1,6 @@
 clear;
 addpath("./utils/")
+rmpath("./utils/desequilibradas/")
 addpath("./utils/equilibradas/")
 a = convert_phasor(1,120);
 dlgtitle = 'Sistemas Trifásicos Desequilibrados';

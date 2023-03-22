@@ -17,3 +17,11 @@ sequencia = questdlg( ...
 );
 
 [VAN,VBN,VCN,VAB,VBC,VCA] = calc_Vfase_Vlinha_gerador(ligacao_gerador,sequencia);
+
+%% Carga desequilibrada em Delta
+'Carga desequilibrada em Delta'
+Za = 16+28i;
+Zb = 14+6.4i;
+Zc = 14+8i;
+
+%%

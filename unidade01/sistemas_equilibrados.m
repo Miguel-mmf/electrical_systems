@@ -1,6 +1,7 @@
 % clc;
 clear;
-addpath("./utils/")
+addpath("./utils/apoio/")
+rmpath("./utils/desequilibradas/")
 addpath("./utils/equilibradas/")
 a = convert_phasor(1,120);
 dlgtitle = 'Sistemas Trifásicos';
