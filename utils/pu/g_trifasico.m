@@ -47,4 +47,6 @@ function g = g_trifasico(V,S,Vbase,Sbase,X,ligacao,sequencia)
     g.VAB = VAB;
     g.VBC = VBC;
     g.VCA = VCA;
+
+    disp(struct2table(g));
 end

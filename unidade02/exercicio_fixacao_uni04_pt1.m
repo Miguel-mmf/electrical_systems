@@ -2,7 +2,7 @@ clear;
 addpath("../utils/pu")
 addpath("../utils/apoio")
 a = convert_phasor(1,120);
-dlgtitle = 'Sistemas Monofásico - PU';
+dlgtitle = 'Sistemas PU';
 
 %% Gerador
 Vg = g_trifasico(18e3,40e6,13.8e3,50e6,0.09,'y','direta');
@@ -76,3 +76,12 @@ Vbarra1pu = (Vbarra2pu + t2_new.Itotalpu*t1_new.X*1i*convert_phasor(1,-30))*conv
 % *convert_phasor(1,-30) e *convert_phasor(1,30)
     % Esse trecho representa a passagem Y-D (T2) e D-Y (T1)
 [Vbarra1A,Vbarra1B,Vbarra1C,Vbarra1AB,Vbarra1BC,Vbarra1CA] = get_V(Vbarra1pu,t1_new.Vbp,'y','positiva');
+
+%% As correntes de fase do lado Delta de T1
+[IAN,IBN,ICN,VAB,VBC,VCA] = get_I( ...
+    (t2_new.Itotalpu*convert_phasor(1,-30)/(sqrt(3)*convert_phasor(1,-30))), ...
+    t1_new.Vbs, ...
+    t1_new.S, ...
+    'd', ...
+    'positiva' ...
+);

@@ -8,10 +8,10 @@ dlgtitle = 'Sistemas Monofásico - PU';
 Vg = convert_phasor(480,0);
 
 %% Transformador 1
-t1 = trans(480,4.8e3,10e3,0.05);
+t1 = trans(480,4.8e3,10e3,0.05,'-');
 
 %% Transformador 2
-t2 = trans(4.8e3,240,10e3,0.05);
+t2 = trans(4.8e3,240,10e3,0.05,'-');
 
 %% Impedância de Fio
 Zfio = 20 + 60i;

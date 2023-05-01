@@ -1,9 +1,10 @@
 clear;
 warning('off','all')
+addpath('../utils/desequilibradas')
 addpath("../utils/comp_simetricas")
 addpath("../utils/apoio/")
 a = convert_phasor(1,120);
-dlgtitle = 'Sistemas Desequilibrados';
+dlgtitle = 'Compoentes Simétricas';
 
 %% Gerador
 VAN = convert_phasor(220,0);

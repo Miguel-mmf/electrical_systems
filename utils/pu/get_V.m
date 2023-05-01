@@ -1,5 +1,5 @@
 function [VAN,VBN,VCN,VAB,VBC,VCA] = get_V(Vpu,Vbase,ligacao,sequencia)
-    
+
     VAN = Vpu*Vbase;
     a = convert_phasor(1,120);
 
