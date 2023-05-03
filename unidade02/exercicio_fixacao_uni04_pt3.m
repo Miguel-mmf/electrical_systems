@@ -48,4 +48,4 @@ t3_new = trans( ...
 
 %% Motor
 'Motor'
-motor = carga(13.8e3,10e6,0.12,0.9);
+motor = carga(13.8e3,10e6,0.12,0.9,1);
