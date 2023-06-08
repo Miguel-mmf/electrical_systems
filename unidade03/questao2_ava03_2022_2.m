@@ -49,7 +49,7 @@ t2_new = trans( ...
 
 %% Linhas de transmissão
 'Linhas de transmissão'
-LT1 = LT_pu( ...
+LTbc = LT_pu( ...
     'b', ...
     'c', ...
     0.25*60/t1_new.Zbs, ...
@@ -57,12 +57,12 @@ LT1 = LT_pu( ...
     0.25*60/t1_new.Zbs ...
 );
 
-LT2 = LT_pu( ...
+LTcd = LT_pu( ...
     'c', ...
     'd', ...
-    0.3*40/t2_new.Zbp, ...
-    0.3*40/t2_new.Zbp, ...
-    0.3*40/t2_new.Zbp ...
+    0.3*40/t1_new.Zbs, ...
+    0.3*40/t1_new.Zbs, ...
+    0.3*40/t1_new.Zbs ...
 );
 
 %% Carga na barra B
@@ -78,3 +78,79 @@ carga2 = struct();
 carga2.P = 20e6;
 carga2.Q = 10.8e6;
 disp(struct2table(carga2));
+
+%% Potencias por barras
+SA = (20e6 + 1i*8.4e6)/100e6;
+SB = (-10e6 - 1i*4e6)/100e6;
+SC = (-20e6 - 1i*10.8e6)/100e6;
+SD = 0;
+SE = (15e6 + 1i*6e6)/100e6;
+
+%% Admitâncias
+
+y11 = 1/(1i*t1_new.X0);
+y12 = -1/(1i*t1_new.X0);
+y13 = 0;
+y14 = 0;
+y15 = 0;
+
+y21 = -1/(1i*t1_new.X0);
+y22 = 1/(1i*t1_new.X0) + 1/(1i*LTbc.X0);
+y23 = -1/(1i*LTbc.X0);
+y24 = 0;
+y25 = 0;
+
+y31 = 0;
+y32 = y23;
+y33 = 1/(1i*LTcd.X0) + 1/(1i*LTbc.X0);
+y34 = -1/(1i*LTcd.X0);
+y35 = 0;
+
+y41 = 0;
+y42 = 0;
+y43 = y34;
+y44 = 1/(1i*t2_new.X0) + 1/(1i*LTcd.X0);
+y45 = -1/(1i*t2_new.X0);
+
+y51 = 0;
+y52 = 0;
+y53 = 0;
+y54 = y45;
+y55 = 1/(1i*t2_new.X0);
+
+
+%% Matriz de impedância 
+Y_m = [y11, y12, y13, y14, y15;
+       y21,  y22, y23, y24, y25;
+       y31, y32, y33, y34, y35;
+       y41, y42, y43,  y44, y45;
+       y51, y52, y53, y54,  y55];
+get_phasor_m(Y_m);
+
+
+%% Tensão na barra B
+Va = convert_phasor(1.05,0);
+
+Vb = (conj(SA) - y11*conj(Va)*Va)/(y12*conj(Va));
+get_phasor(Vb);
+
+Vc = (conj(SB) - y21*conj(Vb)*Va - y22*conj(Vb)*Vb)/(y23*conj(Vb));
+get_phasor(Vc);
+
+Vd = (conj(SC) - y32*conj(Vc)*Vb - y33*conj(Vc)*Vc)/(y34*conj(Vc));
+get_phasor(Vd);
+
+Ve = (conj(SD) - y43*conj(Vd)*Vc - y44*conj(Vd)*Vd)/(y45*conj(Vd));
+get_phasor(Ve);
+
+
+%% Corrente na linha BC
+
+Ibc = (Vb-Va)/(1i*LTbc.X0);
+get_phasor(Ibc);
+
+Ibc_real = Ibc*t1_new.Ibases;
+get_phasor(Ibc_real);
+
+get_phasor(Ibc_real*(a^2));
+get_phasor(Ibc_real*(a));
